@@ -48,6 +48,31 @@ const run = async () => {
       res.send(result);
     });
 
+    app.patch("/users/:id", async (req, res) => { 
+      const id = req.params.id;
+      const updateData = req.body;
+      const filter = {
+        _id: new ObjectId(id),
+      };
+
+
+      const modifiedUser = req.body;
+
+      const updateDoc = {
+        $set: {
+          name: modifiedUser.name,
+          email: modifiedUser.email,
+          role: modifiedUser.role,
+        },
+      };
+
+      const result = await usersCollection.updateOne(filter, updateDoc);
+      console.log("updated user id", id);
+      res.send(result);
+        })
+      
+    
+
     app.delete("/users/:id", async (req, res) => {
       const id = req.params.id;
       const query = {
